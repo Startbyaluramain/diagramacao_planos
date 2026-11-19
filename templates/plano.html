@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;600;700&family=Cascadia+Code:wght@700&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    /* === VARIÁVEIS BASE (EFAF - CULTURA DIGITAL) === */
+    :root {
+      --cor-primaria: #CF4597;
+      --cor-tempo: #3C91C4;
+      --pill-bg: #DCEBF2;
+      --pill-texto: #68A347;
+      --barra-capa: #68A347;
+      --projecao-bg: #68A347;
+      --badge-org-bg: #6CB4D8;
+      --fique-bg: #7AB356;
+      --star-unidade: #68A347;
+      --star-org: #D4AF37;
+      --star-fique: #CF4597;
+      --tabela-header-bg: #D9EAD3;
+      --tabela-header-texto: #68A347;
+      --tabela-borda: #7AB356;
+      --titulo-aula-cor: #CF4597;
+      --titulo-aula-fonte: 'Bai Jamjuree', 'Segoe UI', Arial, sans-serif;
+      --texto-cor: #333333;
+      --gap: 16px;
+      --font-size: 9.8pt;
+      --line-height: 1.46;
+    }
+
+    /* === EFAF - PROGRAMAÇÃO === */
+    body.efaf-programacao {
+      --cor-primaria: #1371A4;
+      --cor-tempo: #1371A4;
+      --titulo-aula-cor: #1371A4;
+      --star-fique: #1371A4;
+    }
+
+    /* === EM - CULTURA DIGITAL === */
+    body.em-cultura_digital {
+      --cor-primaria: #B8258F;
+      --cor-tempo: #B8258F;
+      --pill-bg: #D4F038;
+      --pill-texto: #111111;
+      --barra-capa: linear-gradient(180deg, #1E1E1E 0%, #3A223A 50%, #C5299B 100%);
+      --projecao-bg: #B8258F;
+      --badge-org-bg: #B8258F;
+      --fique-bg: #B8258F;
+      --star-unidade: #C6E422;
+      --star-org: #C6E422;
+      --star-fique: #C6E422;
+      --tabela-header-bg: #B8258F;
+      --tabela-header-texto: #FFFFFF;
+      --tabela-borda: #B8258F;
+      --titulo-aula-cor: #1A1A1A;
+      --titulo-aula-fonte: 'Cascadia Code', Consolas, monospace;
+    }
+
+    /* === EM - PROGRAMAÇÃO === */
+    body.em-programacao {
+      --cor-primaria: #0E6BA8;
+      --cor-tempo: #0E6BA8;
+      --pill-bg: #D4F038;
+      --pill-texto: #111111;
+      --barra-capa: linear-gradient(180deg, #1E1E1E 0%, #3D4A18 55%, #C8E91E 100%);
+      --projecao-bg: #0E6BA8;
+      --badge-org-bg: #0E6BA8;
+      --fique-bg: #0E6BA8;
+      --star-unidade: #C6E422;
+      --star-org: #C6E422;
+      --star-fique: #C6E422;
+      --tabela-header-bg: #0E6BA8;
+      --tabela-header-texto: #FFFFFF;
+      --tabela-borda: #0E6BA8;
+      --titulo-aula-cor: #1A1A1A;
+      --titulo-aula-fonte: 'Cascadia Code', Consolas, monospace;
+    }
+
+    body.modo-compacto {
+      --gap: 10px;
+      --font-size: 9.3pt;
+      --line-height: 1.38;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Bai Jamjuree', 'Segoe UI', Arial, sans-serif;
+      font-size: var(--font-size);
+      line-height: var(--line-height);
+      color: var(--texto-cor);
+      margin: 0;
+      padding: 0;
+    }
+
+    /* === ESTRELINHA DE 4 PONTAS NAS TAGS === */
+    .tag-com-estrela {
+      position: relative;
+      display: inline-block;
+    }
+
+    .estrela-4p {
+      position: absolute;
+      top: -9px;
+      left: -10px;
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+
+    /* === PÁGINA 1 (CAPA FULL A4) === */
+    .pagina-1 {
+      position: relative;
+      z-index: 10;
+      background: #FFFFFF;
+      height: 297mm;
+      max-height: 297mm;
+      overflow: hidden;
+      padding: 14mm 18mm 10mm 20mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      break-after: page;
+    }
+
+    .barra-lateral {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 5.5mm;
+      background: var(--barra-capa);
+    }
+
+    .topo-capa {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .unidade-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill-unidade {
+      background: var(--cor-primaria);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 10pt;
+      padding: 3px 10px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .unidade-nome {
+      font-weight: 700;
+      font-size: 10pt;
+      color: #333333;
+    }
+
+    .badge-projecao {
+      background: var(--projecao-bg);
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: 9pt;
+      padding: 3px 12px;
+      border-radius: 5px;
+    }
+
+    .bloco-titulo {
+      margin: 4px 0 16px 0;
+    }
+
+    .aula-linha {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .aula-num {
+      font-size: 27pt;
+      font-weight: 300;
+      color: var(--cor-primaria);
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+    }
+
+    .aula-duracao {
+      font-size: 10pt;
+      color: var(--cor-tempo);
+      font-weight: 400;
+    }
+
+    .aula-titulo {
+      font-family: var(--titulo-aula-fonte);
+      font-size: 17pt;
+      font-weight: 700;
+      color: var(--titulo-aula-cor);
+      margin: 4px 0 0 0;
+      line-height: 1.2;
+    }
+
+    /* === PILLS DE SEÇÃO (ESTILO OFICIAL START) === */
+    .pill-secao {
+      display: inline-block;
+      background: var(--pill-bg);
+      color: var(--pill-texto);
+      font-weight: 700;
+      font-size: 10.2pt;
+      padding: 3px 12px;
+      border-radius: 6px;
+      margin-bottom: 7px;
+      break-after: avoid;
+    }
+
+    .bloco-capa {
+      margin-bottom: var(--gap);
+      break-inside: avoid;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: var(--gap);
+    }
+
+    .nao-quebrar {
+      break-inside: avoid;
+    }
+
+    ul {
+      padding-left: 18px;
+      margin: 4px 0;
+    }
+
+    li { margin-bottom: 4px; }
+    p { margin: 4px 0 8px 0; }
+
+    /* === RODAPÉ INTEGRADO DA PÁGINA 1 === */
+    .rodape-capa-completo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-top: auto;
+      padding-top: 6px;
+    }
+
+    .rodape-capa-esq {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .aviso-formacao {
+      font-size: 8.8pt;
+      line-height: 1.35;
+      font-weight: 700;
+      color: #222222;
+      max-width: 190px;
+    }
+
+    .aviso-projecao-rodape {
+      font-size: 8.2pt;
+      line-height: 1.35;
+      color: #444444;
+      max-width: 210px;
+    }
+
+    .rodape-capa-dir {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* === PÁGINAS 2+ (TABELA WRAPPER PARA REPETIR CABEÇALHO E RESERVAR RODAPÉ) === */
+    table.percurso-wrapper {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      padding: 0;
+    }
+
+    table.percurso-wrapper > thead {
+      display: table-header-group;
+    }
+
+    table.percurso-wrapper > tfoot {
+      display: table-footer-group;
+    }
+
+    table.percurso-wrapper > thead > tr > td,
+    table.percurso-wrapper > tfoot > tr > td,
+    table.percurso-wrapper > tbody > tr > td {
+      border: none;
+      padding: 0;
+    }
+
+    .cabecalho-img-wrap {
+      width: 100%;
+      padding-bottom: 6mm;
+    }
+
+    .cabecalho-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+   .espaco-rodape {
+      height: 30mm;
+    }
+
+    .rodape-fixo-paginas {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 20mm 8mm 20mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .conteudo-percurso {
+      padding: 0 20mm;
+    }
+
+    .titulo-percurso {
+      font-size: 16pt;
+      font-weight: 700;
+      color: var(--cor-primaria);
+      margin: 0 0 14px 0;
+    }
+
+    .titulo-etapa {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin: 28px 0 10px 0;
+      break-after: avoid;
+    }
+
+    .titulo-etapa h2 {
+      margin: 0;
+      font-size: 12.5pt;
+      font-weight: 700;
+      color: var(--cor-primaria);
+    }
+
+    .tempo-inline {
+      font-size: 9.5pt;
+      color: var(--cor-tempo);
+      font-weight: 400;
+    }
+
+    .proposta-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin: 10px 0 16px 0;
+      break-inside: avoid;
+    }
+
+    .badge-org {
+      background: var(--badge-org-bg);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 9pt;
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: 8px;
+      min-width: 82px;
+      line-height: 1.25;
+      display: inline-block;
+    }
+
+    .desenvolvimento {
+      margin-top: 20px;
+    }
+
+  .desenvolvimento h4 {
+      margin: 20px 0 6px 0;
+      padding-left: 8px;
+      border-left: 3px solid var(--cor-primaria);
+      font-size: 10.2pt;
+      font-weight: 700;
+      color: var(--cor-primaria);
+      break-after: avoid;
+    }
+
+    pre {
+      background: #1E293B;
+      color: #F8FAFC;
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 8.6pt;
+      font-family: 'Cascadia Code', Consolas, monospace;
+      overflow-x: auto;
+      break-inside: avoid;
+      margin: 8px 0 12px 0;
+    }
+
+    code {
+      font-family: 'Cascadia Code', Consolas, monospace;
+      background: #F1F5F9;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 8.8pt;
+    }
+
+    pre code { background: transparent; padding: 0; color: inherit; }
+
+    /* === FIQUE ATENTO === */
+    .fique-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 10px 0;
+      break-after: avoid;
+    }
+
+    .pill-fique {
+      background: var(--fique-bg);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 10.5pt;
+      padding: 4px 14px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    /* === TABELAS DE CONTEÚDO === */
+    .conteudo-percurso table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 16px 0;
+      font-size: 9.5pt;
+    }
+
+    .conteudo-percurso table thead { display: table-header-group; }
+    .conteudo-percurso table tr { break-inside: avoid; }
+
+    .conteudo-percurso table th {
+      background: var(--tabela-header-bg);
+      color: var(--tabela-header-texto);
+      text-align: left;
+      padding: 8px 10px;
+      border: 1.2px solid var(--tabela-borda);
+      font-weight: 700;
+    }
+
+    .conteudo-percurso table td {
+      padding: 8px 10px;
+      border: 1.2px solid var(--tabela-borda);
+      vertical-align: top;
+    }
+
+    .aviso-logoff {
+      margin-top: 18px;
+      font-size: 9.5pt;
+      color: #333333;
+      break-inside: avoid;
+    }
+  </style>
+</head>
+<body class="{{ nivel|lower }}-{{ trilha|lower }}">
+
+  <!-- ================= PÁGINA 1 (CAPA) ================= -->
+  <section class="pagina-1">
+    <div class="barra-lateral"></div>
+
+    <div>
+      <div class="topo-capa">
+        <div class="unidade-wrap">
+          <div class="tag-com-estrela">
+            <svg class="estrela-4p" viewBox="0 0 24 24">
+              <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2Z" fill="var(--star-unidade)"/>
+            </svg>
+            <span class="pill-unidade">Unidade:</span>
+          </div>
+          <span class="unidade-nome">{{ meta.unidade or 'Nome da unidade' }}</span>
+        </div>
+        {% if meta.permite_projecao %}
+          <span class="badge-projecao">Projeção de conteúdo *</span>
+        {% endif %}
+      </div>
+
+      <div class="bloco-titulo">
+        <div class="aula-linha">
+          <span class="aula-num">AULA {{ meta.aula or 'X' }}</span>
+          <span class="aula-duracao">{{ meta.duracao or '50 minutos' }}</span>
+        </div>
+        <h1 class="aula-titulo">{{ meta.titulo or 'Nome da aula' }}</h1>
+      </div>
+
+      <div class="bloco-capa">
+        <span class="pill-secao">{% if nivel == 'EM' and trilha == 'cultura_digital' %}Habilidades{% else %}Habilidade{% endif %}</span>
+        {{ s.habilidade | safe }}
+      </div>
+
+      <div class="grid-2 nao-quebrar">
+        {% if trilha == 'programacao' %}
+          <div class="bloco-capa" style="margin-bottom:0;">
+            <span class="pill-secao">Conteúdos</span>
+            {{ s.conteudos | safe }}
+          </div>
+          <div class="bloco-capa" style="margin-bottom:0;">
+            <span class="pill-secao">Objetivos de aprendizagem</span>
+            {{ s.objetivos | safe }}
+          </div>
+        {% else %}
+          <div class="bloco-capa" style="margin-bottom:0;">
+            <span class="pill-secao">Objetivos de aprendizagem</span>
+            {{ s.objetivos | safe }}
+          </div>
+          <div class="bloco-capa" style="margin-bottom:0;">
+            <span class="pill-secao">Conteúdos</span>
+            {{ s.conteudos | safe }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="bloco-capa">
+        <span class="pill-secao">O que os estudantes aprenderão?</span>
+        {{ s.o_que_aprenderao | safe }}
+      </div>
+
+      <div class="bloco-capa">
+        <span class="pill-secao">Recursos e materiais</span>
+        {{ s.recursos | safe }}
+      </div>
+    </div>
+
+    <!-- RODAPÉ COMPLETO DA CAPA NA MESMA LINHA -->
+    <div class="rodape-capa-completo">
+      <div class="rodape-capa-esq">
+        <img src="{{ assets.rodape_esq_uri }}" style="height:{{ assets.altura_rodape_esq }}; width:auto; display:block;" />
+        <div class="aviso-formacao">
+          Para informações sobre a unidade como um todo, acesse a Formação Docente.
+        </div>
+      </div>
+
+      <div class="rodape-capa-dir">
+        {% if meta.permite_projecao %}
+          <div class="aviso-projecao-rodape">
+            *Caso os computadores não estejam disponíveis, esta aula pode ser ministrada com projetor, em uma sala de aula comum.
+          </div>
+        {% endif %}
+        <img src="{{ assets.logo_uri }}" style="height:40px; width:auto; display:block;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PÁGINAS 2+ (PERCURSO COM CABEÇALHO REPETIDO) ================= -->
+  <table class="percurso-wrapper">
+    <thead>
+      <tr>
+        <td>
+          <div class="cabecalho-img-wrap">
+            <img src="{{ assets.cabecalho_uri }}" alt="Cabeçalho" />
+          </div>
+        </td>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <td><div class="espaco-rodape"></div></td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr>
+        <td>
+          <div class="conteudo-percurso">
+            <h1 class="titulo-percurso">Percurso da Aula</h1>
+
+            <!-- 1. PONTO DE PARTIDA + REFLEXÃO INICIAL (2 COLUNAS) -->
+            <div class="grid-2 nao-quebrar" style="align-items:start;">
+              <div>
+                <div class="titulo-etapa" style="margin-top:0;">
+                  <h2>1. Ponto de Partida</h2>
+                  <span class="tempo-inline">{{ tempos.ponto_partida or '5 min' }}</span>
+                </div>
+                {{ s.ponto_partida | safe }}
+              </div>
+
+              {% if s.reflexao_inicial %}
+              <div>
+                <span class="pill-secao">Reflexão inicial</span>
+                <p style="margin-top:0;">
+                  {% if nivel == 'EM' and trilha == 'programacao' %}
+                    Perguntas possíveis:
+                  {% else %}
+                    Para iniciar a conversa, você pode fazer as seguintes perguntas aos estudantes:
+                  {% endif %}
+                </p>
+                {{ s.reflexao_inicial | safe }}
+              </div>
+              {% endif %}
+            </div>
+
+            <!-- 2. PRÁTICA GUIADA -->
+            <div class="titulo-etapa">
+              <h2>2. Prática Guiada</h2>
+              <span class="tempo-inline">{{ tempos.pratica_guiada or '25 min' }}</span>
+            </div>
+
+            <div class="proposta-wrap">
+              <div class="tag-com-estrela" style="flex-shrink:0;">
+                <svg class="estrela-4p" viewBox="0 0 24 24">
+                  <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2Z" fill="var(--star-org)"/>
+                </svg>
+                <div class="badge-org">{{ meta.organizacao_pratica or 'Individual ou em grupos' }}</div>
+              </div>
+              <div>
+                <span class="pill-secao">Proposta</span>
+                {{ s.proposta | safe }}
+              </div>
+            </div>
+
+            <div class="desenvolvimento">
+              <span class="pill-secao">Desenvolvimento</span>
+              {{ s.desenvolvimento | safe }}
+            </div>
+
+            {% if s.ampliar_mediacao %}
+            <div style="margin-top: 26px; break-inside: avoid;">
+              <span class="pill-secao">Para ampliar a mediação{% if meta.mediacao_estrategia %} - {{ meta.mediacao_estrategia }}{% endif %}</span>
+              {{ s.ampliar_mediacao | safe }}
+            </div>
+            {% endif %}
+
+            <!-- FIQUE ATENTO -->
+            {% if s.fique_atento %}
+            <div class="fique-header">
+              <div class="tag-com-estrela">
+                <svg class="estrela-4p" viewBox="0 0 24 24">
+                  <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2Z" fill="var(--star-fique)"/>
+                </svg>
+                <span class="pill-fique">Fique atento</span>
+              </div>
+              <strong>Alguns erros ou dúvidas que podem surgir:</strong>
+            </div>
+            {{ s.fique_atento | safe }}
+            {% endif %}
+
+            <!-- 3. RESOLUÇÃO NA PLATAFORMA (FIXO) -->
+            <div class="nao-quebrar">
+              <div class="titulo-etapa">
+                <h2>3. Resolução das atividades/exercícios na plataforma</h2>
+                <span class="tempo-inline">{{ tempos.exercicios or '5 min' }}</span>
+              </div>
+              <p>Reserve um momento para que os estudantes realizem atividades e exercícios disponíveis na plataforma. Para verificar a aprendizagem, consulte o arquivo de gabarito correspondente à aula.</p>
+            </div>
+
+            <!-- 4. FECHAMENTO -->
+            <div class="titulo-etapa">
+              <h2>4. Fechamento</h2>
+              <span class="tempo-inline">{{ tempos.fechamento or '5 min' }}</span>
+            </div>
+
+            {% if trilha == 'programacao' and s.fechamento_intro %}
+              {{ s.fechamento_intro | safe }}
+            {% endif %}
+
+            {% if trilha == 'programacao' and nivel == 'EFAF' and (s.resultado_esperado or s.teste) %}
+            <div class="grid-2 nao-quebrar" style="margin-top: 16px;">
+              <div>
+                <span class="pill-secao">Resultado esperado</span>
+                {{ s.resultado_esperado | safe }}
+              </div>
+              <div>
+                <span class="pill-secao">Teste</span>
+                {{ s.teste | safe }}
+              </div>
+            </div>
+            {% endif %}
+
+            {% if s.verificacao_aprendizagem %}
+            <div style="margin-top: 22px; break-inside: avoid;">
+              {% if trilha == 'programacao' %}
+                <span class="pill-secao">Como verificar se os estudantes alcançaram o objetivo da aula?</span>
+              {% else %}
+                <p style="font-weight:700; margin-bottom:6px; break-after:avoid;">Como verificar se os estudantes alcançaram os objetivos da aula?</p>
+              {% endif %}
+              {{ s.verificacao_aprendizagem | safe }}
+            </div>
+            {% endif %}
+
+            {% if trilha == 'programacao' and nivel == 'EM' and (s.resultado_esperado or s.teste) %}
+            <div class="grid-2 nao-quebrar" style="margin-top: 16px;">
+              <div>
+                <span class="pill-secao">Resultado esperado</span>
+                {{ s.resultado_esperado | safe }}
+              </div>
+              <div>
+                <span class="pill-secao">Teste</span>
+                {{ s.teste | safe }}
+              </div>
+            </div>
+            {% endif %}
+
+            <p class="aviso-logoff">
+              Antes de encerrar a aula, lembre os estudantes de fazerem <strong>logoff na plataforma da Start</strong>. Caso eles tenham desenvolvido projetos em alguma outra plataforma, lembre-os de <strong>salvar</strong> e <strong>desconectar</strong>.
+            </p>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- RODAPÉ FIXO PARA PÁGINAS 2+ (INCLUINDO A ÚLTIMA PÁGINA) -->
+  <div class="rodape-fixo-paginas">
+    <img src="{{ assets.rodape_esq_uri }}" style="height:{{ assets.altura_rodape_esq }}; width:auto; display:block;" />
+    <img src="{{ assets.logo_uri }}" style="height:40px; width:auto; display:block;" />
+  </div>
+
+</body>
+</html>
