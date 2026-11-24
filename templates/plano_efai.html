@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Bai Jamjuree', sans-serif;
+      font-size: 10pt;
+      line-height: 1.55;
+      color: #2b2b2b;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Topo e rodapé fixos em todas as páginas */
+    .topo-fixo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 15mm;
+      background: linear-gradient(90deg, #f3e0f7 0%, #f5e5ee 60%, #f9ebd6 100%);
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .topo-fixo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+  .rodape-fixo {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 18mm 9mm 18mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      z-index: 10;
+    }
+
+    .rodape-fixo .arte-esq {
+      height: 54px;
+      width: auto;
+      margin-left: -10px;
+      display: block;
+    }
+
+    .rodape-fixo .logo-dir {
+      height: 42px;
+      width: auto;
+      display: block;
+    }
+
+    /* Tabela estrutural para reservar margem de topo e rodapé em todas as páginas */
+    table.pagina-estrutura {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .espaco-topo {
+      height: 22mm;
+    }
+
+    .espaco-rodape {
+      height: 30mm;
+    }
+
+    .conteudo {
+      padding: 0 18mm;
+    }
+
+    /* Cabeçalho da Página 1 */
+    .linha-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .tag-unidade-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .estrela-unidade {
+      position: absolute;
+      top: -10px;
+      left: -13px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .tag-unidade {
+      background: #c7c4f7;
+      color: #1f2430;
+      font-weight: 700;
+      font-size: 9.5pt;
+      padding: 3px 10px;
+      border-radius: 5px;
+    }
+
+    .nome-unidade {
+      font-weight: 700;
+      font-size: 9.5pt;
+      color: #232323;
+      margin-right: auto;
+    }
+
+    .duracao {
+      color: #0098d9;
+      font-size: 9.5pt;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .titulo-aula-num {
+      margin: 4px 0 0 0;
+      font-size: 27pt;
+      font-weight: 400;
+      color: #0098d9;
+      line-height: 1.05;
+      letter-spacing: 0.5px;
+    }
+
+    .titulo-aula-nome {
+      margin: 2px 0 16px 0;
+      font-size: 16.5pt;
+      font-weight: 700;
+      color: #0098d9;
+      line-height: 1.2;
+    }
+
+    /* Blocos curriculares empilhados */
+    .bloco-curriculo {
+      margin-bottom: 14px;
+    }
+
+    /* Títulos em Pill verde + Selo amarelo XX min */
+    .secao-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0 9px 0;
+      break-after: avoid;
+    }
+
+    .bloco-curriculo .secao-header {
+      margin-top: 6px;
+    }
+
+    .pill {
+      display: inline-block;
+      background: #e5f1f0;
+      color: #52a447;
+      font-weight: 700;
+      font-size: 10.5pt;
+      padding: 4px 12px;
+      border-radius: 6px;
+    }
+
+    .tempo-badge {
+      display: inline-block;
+      background: #f4b619;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 9.5pt;
+      padding: 3px 14px 3px 11px;
+      clip-path: polygon(0 0, 100% 0, 90% 100%, 4% 100%);
+    }
+
+    /* Hierarquia de texto e destaques */
+    p {
+      margin: 0 0 10px 0;
+    }
+
+    strong {
+      color: #1b365d;
+      font-weight: 700;
+    }
+
+    ul, ol {
+      margin: 6px 0 12px 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    ul li::marker {
+      color: #0098d9;
+    }
+
+    /* Caixas de destaque (falas sugeridas, perguntas-chave ou rubrica) */
+    blockquote {
+      margin: 10px 0 14px 0;
+      padding: 9px 14px;
+      background: #f3f8fc;
+      border-left: 3.5px solid #0098d9;
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      color: #1f2d3d;
+      break-inside: avoid;
+    }
+
+    blockquote p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Aviso fixo do Momento plataforma */
+    .texto-fixo-plataforma {
+      margin: 0 0 14px 0;
+      padding: 9px 12px;
+      background: #f7f8fb;
+      border-left: 3px solid #c7c4f7;
+      border-radius: 0 6px 6px 0;
+      font-size: 9.3pt;
+      color: #3f4654;
+    }
+
+    /* Conteúdo dentro do Momento Plataforma */
+    .momento-plataforma h3 {
+      display: inline-block;
+      background: #e5f1f0;
+      color: #52a447;
+      font-weight: 700;
+      font-size: 10.5pt;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin: 16px 0 8px 0;
+      break-after: avoid;
+    }
+
+    .momento-plataforma h4 {
+      font-size: 14.5pt;
+      font-weight: 700;
+      color: #0098d9;
+      margin: 18px 0 8px 0;
+      break-after: avoid;
+    }
+
+    /* Tabela Atividades | Orientações */
+    .momento-plataforma table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 14px 0;
+      font-size: 9.5pt;
+    }
+
+    .momento-plataforma th {
+      background: #cfd5ff;
+      color: #111111;
+      font-weight: 700;
+      text-align: center;
+      padding: 10px 12px;
+      border: 1.2px solid #8ea8f8;
+    }
+
+    .momento-plataforma td {
+      padding: 10px 12px;
+      border: 1.2px solid #8ea8f8;
+      vertical-align: top;
+      width: 50%;
+    }
+
+    .momento-plataforma tr {
+      break-inside: avoid;
+    }
+
+    .momento-plataforma td img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 8px auto;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topo fixo -->
+  <div class="topo-fixo">
+    {% if assets.topo_efai %}
+      <img src="{{ assets.topo_efai }}" alt="" />
+    {% endif %}
+  </div>
+
+  <!-- Rodapé fixo -->
+  <div class="rodape-fixo">
+    {% if assets.rodape_efai_esq %}
+      <img class="arte-esq" src="{{ assets.rodape_efai_esq }}" alt="" />
+    {% else %}
+      <div></div>
+    {% endif %}
+    {% if assets.logo_efai_dir %}
+      <img class="logo-dir" src="{{ assets.logo_efai_dir }}" alt="Start by Alura" />
+    {% endif %}
+  </div>
+
+  <table class="pagina-estrutura">
+    <thead>
+      <tr><td><div class="espaco-topo"></div></td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="conteudo">
+
+            <!-- Cabeçalho -->
+            <div class="linha-meta">
+              <span class="tag-unidade-wrap">
+                <svg class="estrela-unidade" viewBox="0 0 24 24" fill="#9ea4f7">
+                  <path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z"/>
+                </svg>
+                <span class="tag-unidade">Unidade:</span>
+              </span>
+              <span class="nome-unidade">{{ meta.unidade }}</span>
+              <span class="duracao">{{ meta.duracao or '50 minutos' }}</span>
+            </div>
+
+            <div class="titulo-aula-num">AULA {{ meta.aula }}</div>
+            <div class="titulo-aula-nome">{{ meta.titulo }}</div>
+
+            <!-- Habilidade BNCC -->
+            {% if s.habilidade %}
+            <div class="bloco-curriculo">
+              <div class="secao-header"><span class="pill">Habilidade BNCC</span></div>
+              {{ s.habilidade | safe }}
+            </div>
+            {% endif %}
+
+            <!-- Objetivo de aprendizagem -->
+            {% if s.objetivo %}
+            <div class="bloco-curriculo">
+              <div class="secao-header"><span class="pill">Objetivo de aprendizagem</span></div>
+              {{ s.objetivo | safe }}
+            </div>
+            {% endif %}
+
+            <!-- Recursos e materiais -->
+            {% if s.recursos %}
+            <div class="secao-header"><span class="pill">Recursos e materiais</span></div>
+            {{ s.recursos | safe }}
+            {% endif %}
+
+            <!-- Aquecimento -->
+            {% if s.aquecimento %}
+            <div class="secao-header">
+              <span class="pill">Aquecimento</span>
+              {% if meta.tempos and meta.tempos.aquecimento %}
+                <span class="tempo-badge">{{ meta.tempos.aquecimento }}</span>
+              {% endif %}
+            </div>
+            {{ s.aquecimento | safe }}
+            {% endif %}
+
+            <!-- Momento plataforma -->
+            {% if s.momento_plataforma %}
+            <div class="secao-header">
+              <span class="pill">Momento plataforma</span>
+              {% if meta.tempos and meta.tempos.momento_plataforma %}
+                <span class="tempo-badge">{{ meta.tempos.momento_plataforma }}</span>
+              {% endif %}
+            </div>
+            <p class="texto-fixo-plataforma">
+              Oriente os estudantes a assistirem aos vídeos e completarem os exercícios na plataforma Start.
+              Eles podem assistir individualmente nos computadores ou em conjunto com a projeção na sala de aula.
+              Se optar pela projeção, dê tempo para que respondam às atividades individualmente.
+            </p>
+            <div class="momento-plataforma">
+              {{ s.momento_plataforma | safe }}
+            </div>
+            {% endif %}
+
+            <!-- Mão na massa (opcional) -->
+            {% if s.mao_na_massa %}
+            <div class="secao-header">
+              <span class="pill">Mão na massa</span>
+              {% if meta.tempos and meta.tempos.mao_na_massa %}
+                <span class="tempo-badge">{{ meta.tempos.mao_na_massa }}</span>
+              {% endif %}
+            </div>
+            {{ s.mao_na_massa | safe }}
+            {% endif %}
+
+            <!-- Arremate -->
+            {% if s.arremate %}
+            <div class="secao-header">
+              <span class="pill">Arremate</span>
+              {% if meta.tempos and meta.tempos.arremate %}
+                <span class="tempo-badge">{{ meta.tempos.arremate }}</span>
+              {% endif %}
+            </div>
+            {{ s.arremate | safe }}
+            {% endif %}
+
+            <!-- Atividades extras (opcional) -->
+            {% if s.atividades_extras %}
+            <div class="secao-header"><span class="pill">Atividades extras</span></div>
+            {{ s.atividades_extras | safe }}
+            {% endif %}
+
+            <!-- Diário de bordo (opcional) -->
+            {% if s.diario_de_bordo %}
+            <div class="secao-header"><span class="pill">Diário de bordo</span></div>
+            {{ s.diario_de_bordo | safe }}
+            {% endif %}
+
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr><td><div class="espaco-rodape"></div></td></tr>
+    </tfoot>
+  </table>
+
+</body>
+</html>
